@@ -15,7 +15,11 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 
 1. What is a vector in R?  
 
+They are a way to keep the program R clean. Using c to create a vector keeps our work organized.
+
 2. What is a data matrix in R?  
+
+Date matrix are a data table that acts like a vector, except it contains more info.
 
 3. Below are data collected by three scientists (Jill, Steve, Susan in order) measuring temperatures of eight hot springs. Run this code chunk to create the vectors.  
 ```{r}
