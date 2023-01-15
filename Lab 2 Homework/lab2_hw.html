@@ -403,7 +403,8 @@ contains more info.</p>
 <ol start="3" style="list-style-type: decimal">
 <li>Below are data collected by three scientists (Jill, Steve, Susan in
 order) measuring temperatures of eight hot springs. Run this code chunk
-to create the vectors.</li>
+to create the vectors.<br />
+</li>
 </ol>
 <pre class="r"><code>spring_1 &lt;- c(36.25, 35.40, 35.30)
 spring_2 &lt;- c(35.15, 35.35, 33.35)
@@ -415,7 +416,8 @@ spring_7 &lt;- c(32.90, 32.50, 32.80)
 spring_8 &lt;- c(36.80, 36.45, 33.15)</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Build a data matrix that has the springs as rows and the columns as
-scientists.</li>
+scientists.<br />
+</li>
 </ol>
 <pre class="r"><code>springs&lt;- c(spring_1,spring_2,spring_3,spring_4,spring_5,spring_6,spring_7,spring_8)
 springs</code></pre>
@@ -469,7 +471,8 @@ springs_mean</code></pre>
 ##   Mystery Spring   Emerald Spring   Emerald Spring     Pearl Spring 
 ##            92.55            90.60            98.20           106.40</code></pre>
 <ol start="7" style="list-style-type: decimal">
-<li>Add this as a new column in the data matrix.</li>
+<li>Add this as a new column in the data matrix.<br />
+</li>
 </ol>
 <pre class="r"><code>all_springs_matrix &lt;- cbind(springs_matrix, springs_mean)
 all_springs_matrix</code></pre>
@@ -488,7 +491,8 @@ all_springs_matrix</code></pre>
 <pre class="r"><code>springs_matrix[2,3]</code></pre>
 <pre><code>## [1] 33.35</code></pre>
 <ol start="9" style="list-style-type: decimal">
-<li>Calculate the mean for Jill’s column only.</li>
+<li>Calculate the mean for Jill’s column only.<br />
+</li>
 </ol>
 <pre class="r"><code>springs_matrix[1:8]</code></pre>
 <pre><code>## [1] 36.25 35.15 30.70 39.70 31.85 30.20 32.90 36.80</code></pre>
