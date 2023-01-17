@@ -1,0 +1,66 @@
+---
+title: "lab 3"
+output: html_document
+date: "2023-01-17"
+---
+
+```{r}
+plant_height_1 <-c(30.7)
+plant_height_2 <-c(37.6)
+plant_height_3 <-c(28.4)
+plant_height_4 <-c(NA)
+plant_height_5<-c(33.2)
+```
+```{r}
+plant_heights<- c(plant_height_1,plant_height_2,plant_height_3,plant_height_4,plant_height_5)
+```
+
+```{r}
+plant_weight_1<-c(4)
+plant_weight_2<-c(5.2)
+plant_weight_3<-c(3.7)
+plant_weight_4<-c(NA)
+plant_weight_5<-c(4.6)
+```
+```{r}
+plants_weights<- c(plant_weight_1,plant_weight_2,plant_weight_3,plant_weight_4,plant_weight_5)
+```
+
+
+```{r}
+plant_experiment<- c(plant_heights,plants_weights)
+plant_experiment
+```
+
+```{r}
+plant_experiment_matrix<- matrix(plant_experiment,nrow = 5, byrow = F)
+plant_experiment_matrix
+```
+
+```{r}
+colmanes(plant_experiment_matrix)<- measured
+rownames(plant_experiment_matrix)<-samples 
+```
+
+
+```{r}
+plant_experiment_matrix
+```
+
+```{r}
+plant_means<- colMeans(plant_experiment_matrix, na.rm = T)
+plant_means
+```
+
+```{r}
+plant_experiment_martix_final<-rbind(plant_experiment_matrix, plant_means)
+```
+
+```{r}
+plant_experiment_martix_final
+```
+
+
+
+
+
