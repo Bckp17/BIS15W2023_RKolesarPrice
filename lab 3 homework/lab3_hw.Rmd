@@ -3,9 +3,9 @@ title: "Lab 3 Homework"
 author: "Rebecca Kolesar-Price"
 date: "1/18/23"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: yes
 ---
 
 ## Instructions
