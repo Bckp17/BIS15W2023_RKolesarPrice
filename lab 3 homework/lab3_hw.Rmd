@@ -62,13 +62,12 @@ There are 32 herbivores
 
 
 ```{r}
-large_mammals<-filter(sleep,bodywt<=200)
+large_mammals<-filter(msleep,bodywt<=200)
 large_mammals
 ```
 
 ```{r}
-small_mammals <-filter(sleep,bodywt<=1)
-small_mammals
+small_mammals<- filter(msleep,bodywt<=1)
 ```
 
 8. What is the mean weight for both the small and large mammals?
