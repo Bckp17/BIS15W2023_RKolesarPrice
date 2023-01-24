@@ -1,0 +1,61 @@
+---
+title: "lab 5 warm up"
+output: html_document
+date: "2023-01-24"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+library("tidyverse")
+```
+
+```{r}
+bison<-readr::read_csv("data/bison.csv")
+```
+
+```{r}
+glimpse(bison)
+```
+
+```{r}
+bison_new<- select(bison, "animal_code","animal_sex","animal_weight","animal_yob")
+```
+```{r}
+bison_yob<-filter(bison_new, animal_yob>=1980 & animal_yob<=1990)
+```
+```{r}
+table(bison_yob$animal_sex)
+```
+```{r}
+bison_m<-filter(bison_yob, animal_sex=="M")
+```
+```{r}
+bison_f<-filter(bison_yob, animal_sex=="F")
+```
+
+```{r}
+mean(bison_m$animal_weight)
+```
+
+```{r}
+mean(bison_f$animal_weight)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
