@@ -538,20 +538,22 @@ anyNA.data.frame(herbivore)
 **8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.**  
 
 ```r
-anyNA.data.frame(homerange)
+mean(herbivore$mean.hra.m2, na.rm=T)
 ```
 
 ```
-## [1] TRUE
+## [1] NaN
 ```
 
 ```r
-mean(homerange$mean.hra.m2)
+mean(carnivore$mean.hra.m2, na.rm=T)
 ```
 
 ```
-## [1] 21456509
+## [1] 13039918
 ```
+
+
 
 ```r
 variable.names(homerange)
@@ -575,10 +577,70 @@ variable.names(homerange)
 **9. Make a new dataframe `deer` that is limited to the mean mass, log10 mass, family, genus, and species of deer in the database. The family for deer is cervidae. Arrange the data in descending order by log10 mass. Which is the largest deer? What is its common name?**  
 
 ```r
-deer<- filter(homerange, family=="deer", species=="deer", genus=="deer",log10.mass=="deer")
+deer<- filter(homerange, family=="cervidae")
 ```
 
-**10. As measured by the data, which snake species has the smallest homerange? Show all of your work, please. Look this species up online and tell me about it!** **Snake is found in taxon column**    
+```r
+deer<- select(deer,"family","genus","species", "mean.mass.g","log10.mass")
+```
+
+```r
+arrange(deer, log10.mass, na.rm=T)
+```
+
+```
+## # A tibble: 12 × 5
+##    family   genus      species     mean.mass.g log10.mass
+##    <chr>    <chr>      <chr>             <dbl>      <dbl>
+##  1 cervidae pudu       puda              7500.       3.88
+##  2 cervidae muntiacus  reevesi          13500.       4.13
+##  3 cervidae capreolus  capreolus        24050.       4.38
+##  4 cervidae cervus     nippon           29450.       4.47
+##  5 cervidae ozotoceros bezoarticus      35000.       4.54
+##  6 cervidae odocoileus hemionus         53864.       4.73
+##  7 cervidae axis       axis             62823.       4.80
+##  8 cervidae dama       dama             71450.       4.85
+##  9 cervidae odocoileus virginianus      87884.       4.94
+## 10 cervidae rangifer   tarandus        102059.       5.01
+## 11 cervidae cervus     elaphus         234758.       5.37
+## 12 cervidae alces      alces           307227.       5.49
+```
+
+
+**10. As measured by the data, which snake species has the smallest homerange? Show all of your work, please. Look this species up online and tell me about it!** **Snake is found in taxon column**  
+
+
+
+```r
+snake <- filter(homerange, taxon=="snakes")
+```
+
+```r
+snake <-select(snake, "genus", "species", "mean.hra.m2")
+```
+
+
+
+```r
+arrange(snake, "mean.hra.m2")
+```
+
+```
+## # A tibble: 41 × 3
+##    genus      species                  mean.hra.m2
+##    <chr>      <chr>                          <dbl>
+##  1 carphopis  vermis                           700
+##  2 carphopis  viridis                          253
+##  3 coluber    constrictor                   151000
+##  4 coluber    constrictor flaviventris      114500
+##  5 diadophis  punctatus                       6476
+##  6 drymarchon couperi                      1853000
+##  7 elaphe     guttata emoryi                150600
+##  8 elaphe     obsoleta                       46000
+##  9 heterodon  platirhinos                   516375
+## 10 hierophis  viridiflavus                  110900
+## # … with 31 more rows
+```
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   

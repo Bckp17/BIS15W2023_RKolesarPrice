@@ -844,10 +844,10 @@ carnivores and another that is restricted to herbivores.</strong></p>
 <pre><code>## [1] FALSE</code></pre>
 <p><strong>8. Do herbivores or carnivores have, on average, a larger
 <code>mean.hra.m2</code>? Remove any NAs from the data.</strong></p>
-<pre class="r"><code>anyNA.data.frame(homerange)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>mean(homerange$mean.hra.m2)</code></pre>
-<pre><code>## [1] 21456509</code></pre>
+<pre class="r"><code>mean(herbivore$mean.hra.m2, na.rm=T)</code></pre>
+<pre><code>## [1] NaN</code></pre>
+<pre class="r"><code>mean(carnivore$mean.hra.m2, na.rm=T)</code></pre>
+<pre><code>## [1] 13039918</code></pre>
 <pre class="r"><code>variable.names(homerange)</code></pre>
 <pre><code>##  [1] &quot;taxon&quot;                      &quot;common.name&quot;               
 ##  [3] &quot;class&quot;                      &quot;order&quot;                     
@@ -866,11 +866,45 @@ the mean mass, log10 mass, family, genus, and species of deer in the
 database. The family for deer is cervidae. Arrange the data in
 descending order by log10 mass. Which is the largest deer? What is its
 common name?</strong></p>
-<pre class="r"><code>deer&lt;- filter(homerange, family==&quot;deer&quot;, species==&quot;deer&quot;, genus==&quot;deer&quot;,log10.mass==&quot;deer&quot;)</code></pre>
+<pre class="r"><code>deer&lt;- filter(homerange, family==&quot;cervidae&quot;)</code></pre>
+<pre class="r"><code>deer&lt;- select(deer,&quot;family&quot;,&quot;genus&quot;,&quot;species&quot;, &quot;mean.mass.g&quot;,&quot;log10.mass&quot;)</code></pre>
+<pre class="r"><code>arrange(deer, log10.mass, na.rm=T)</code></pre>
+<pre><code>## # A tibble: 12 × 5
+##    family   genus      species     mean.mass.g log10.mass
+##    &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;             &lt;dbl&gt;      &lt;dbl&gt;
+##  1 cervidae pudu       puda              7500.       3.88
+##  2 cervidae muntiacus  reevesi          13500.       4.13
+##  3 cervidae capreolus  capreolus        24050.       4.38
+##  4 cervidae cervus     nippon           29450.       4.47
+##  5 cervidae ozotoceros bezoarticus      35000.       4.54
+##  6 cervidae odocoileus hemionus         53864.       4.73
+##  7 cervidae axis       axis             62823.       4.80
+##  8 cervidae dama       dama             71450.       4.85
+##  9 cervidae odocoileus virginianus      87884.       4.94
+## 10 cervidae rangifer   tarandus        102059.       5.01
+## 11 cervidae cervus     elaphus         234758.       5.37
+## 12 cervidae alces      alces           307227.       5.49</code></pre>
 <p><strong>10. As measured by the data, which snake species has the
 smallest homerange? Show all of your work, please. Look this species up
 online and tell me about it!</strong> <strong>Snake is found in taxon
 column</strong></p>
+<pre class="r"><code>snake &lt;- filter(homerange, taxon==&quot;snakes&quot;)</code></pre>
+<pre class="r"><code>snake &lt;-select(snake, &quot;genus&quot;, &quot;species&quot;, &quot;mean.hra.m2&quot;)</code></pre>
+<pre class="r"><code>arrange(snake, &quot;mean.hra.m2&quot;)</code></pre>
+<pre><code>## # A tibble: 41 × 3
+##    genus      species                  mean.hra.m2
+##    &lt;chr&gt;      &lt;chr&gt;                          &lt;dbl&gt;
+##  1 carphopis  vermis                           700
+##  2 carphopis  viridis                          253
+##  3 coluber    constrictor                   151000
+##  4 coluber    constrictor flaviventris      114500
+##  5 diadophis  punctatus                       6476
+##  6 drymarchon couperi                      1853000
+##  7 elaphe     guttata emoryi                150600
+##  8 elaphe     obsoleta                       46000
+##  9 heterodon  platirhinos                   516375
+## 10 hierophis  viridiflavus                  110900
+## # … with 31 more rows</code></pre>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
 <h2>Push your final code to GitHub!</h2>
