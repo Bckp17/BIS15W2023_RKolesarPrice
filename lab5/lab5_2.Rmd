@@ -67,25 +67,28 @@ tabyl(superhero_info, alignment)
 
 2. Notice that we have some neutral superheros! Who are they?
 ```{r}
-
+neutral <- filter(superhero_info, alignment=="neutral")
+neutral
 ```
 
 ## `superhero_info`
 3. Let's say we are only interested in the variables name, alignment, and "race". How would you isolate these variables from `superhero_info`?
 ```{r}
-
+superhero_info_new<-select(superhero_info, name, alignment, race)
+superhero_info_new
 ```
 
 ## Not Human
 4. List all of the superheros that are not human.
 ```{r}
-
+superhero_info %>% 
+  filter(race!="Human")
 ```
 
 ## Good and Evil
 5. Let's make two different data frames, one focused on the "good guys" and another focused on the "bad guys".
 ```{r}
-
+#good_guys<- select(superhero_info, alignment=="good")
 ```
 
 ```{r}

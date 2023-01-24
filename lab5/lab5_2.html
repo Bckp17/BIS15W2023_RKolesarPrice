@@ -1649,6 +1649,23 @@ explore the proportion of good guys and bad guys in the
 <ol start="2" style="list-style-type: decimal">
 <li>Notice that we have some neutral superheros! Who are they?</li>
 </ol>
+<pre class="r"><code>neutral &lt;- filter(superhero_info, alignment==&quot;neutral&quot;)
+neutral</code></pre>
+<pre><code>## # A tibble: 24 × 10
+##    name       gender eye_c…¹ race  hair_…² height publi…³ skin_…⁴ align…⁵ weight
+##    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;
+##  1 Bizarro    Male   black   Biza… Black      191 DC Com… white   neutral    155
+##  2 Black Fla… Male   &lt;NA&gt;    God … &lt;NA&gt;        NA DC Com… &lt;NA&gt;    neutral     NA
+##  3 Captain C… Male   brown   Human Brown       NA DC Com… &lt;NA&gt;    neutral     NA
+##  4 Copycat    Female red     Muta… White      183 Marvel… blue    neutral     67
+##  5 Deadpool   Male   brown   Muta… No Hair    188 Marvel… &lt;NA&gt;    neutral     95
+##  6 Deathstro… Male   blue    Human White      193 DC Com… &lt;NA&gt;    neutral    101
+##  7 Etrigan    Male   red     Demon No Hair    193 DC Com… yellow  neutral    203
+##  8 Galactus   Male   black   Cosm… Black      876 Marvel… &lt;NA&gt;    neutral     16
+##  9 Gladiator  Male   blue    Stro… Blue       198 Marvel… purple  neutral    268
+## 10 Indigo     Female &lt;NA&gt;    Alien Purple      NA DC Com… &lt;NA&gt;    neutral     NA
+## # … with 14 more rows, and abbreviated variable names ¹​eye_color, ²​hair_color,
+## #   ³​publisher, ⁴​skin_color, ⁵​alignment</code></pre>
 </div>
 <div id="superhero_info" class="section level2">
 <h2><code>superhero_info</code></h2>
@@ -1657,18 +1674,54 @@ explore the proportion of good guys and bad guys in the
 and “race”. How would you isolate these variables from
 <code>superhero_info</code>?</li>
 </ol>
+<pre class="r"><code>superhero_info_new&lt;-select(superhero_info, name, alignment, race)
+superhero_info_new</code></pre>
+<pre><code>## # A tibble: 734 × 3
+##    name          alignment race             
+##    &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;            
+##  1 A-Bomb        good      Human            
+##  2 Abe Sapien    good      Icthyo Sapien    
+##  3 Abin Sur      good      Ungaran          
+##  4 Abomination   bad       Human / Radiation
+##  5 Abraxas       bad       Cosmic Entity    
+##  6 Absorbing Man bad       Human            
+##  7 Adam Monroe   good      &lt;NA&gt;             
+##  8 Adam Strange  good      Human            
+##  9 Agent 13      good      &lt;NA&gt;             
+## 10 Agent Bob     good      Human            
+## # … with 724 more rows</code></pre>
 </div>
 <div id="not-human" class="section level2">
 <h2>Not Human</h2>
 <ol start="4" style="list-style-type: decimal">
 <li>List all of the superheros that are not human.</li>
 </ol>
+<pre class="r"><code>superhero_info %&gt;% 
+  filter(race!=&quot;Human&quot;)</code></pre>
+<pre><code>## # A tibble: 222 × 10
+##    name       gender eye_c…¹ race  hair_…² height publi…³ skin_…⁴ align…⁵ weight
+##    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;
+##  1 Abe Sapien Male   blue    Icth… No Hair    191 Dark H… blue    good        65
+##  2 Abin Sur   Male   blue    Unga… No Hair    185 DC Com… red     good        90
+##  3 Abominati… Male   green   Huma… No Hair    203 Marvel… &lt;NA&gt;    bad        441
+##  4 Abraxas    Male   blue    Cosm… Black       NA Marvel… &lt;NA&gt;    bad         NA
+##  5 Ajax       Male   brown   Cybo… Black      193 Marvel… &lt;NA&gt;    bad         90
+##  6 Alien      Male   &lt;NA&gt;    Xeno… No Hair    244 Dark H… black   bad        169
+##  7 Amazo      Male   red     Andr… &lt;NA&gt;       257 DC Com… &lt;NA&gt;    bad        173
+##  8 Angel      Male   &lt;NA&gt;    Vamp… &lt;NA&gt;        NA Dark H… &lt;NA&gt;    good        NA
+##  9 Angel Dust Female yellow  Muta… Black      165 Marvel… &lt;NA&gt;    good        57
+## 10 Anti-Moni… Male   yellow  God … No Hair     61 DC Com… &lt;NA&gt;    bad         NA
+## # … with 212 more rows, and abbreviated variable names ¹​eye_color, ²​hair_color,
+## #   ³​publisher, ⁴​skin_color, ⁵​alignment</code></pre>
 </div>
 <div id="good-and-evil" class="section level2">
 <h2>Good and Evil</h2>
 <ol start="5" style="list-style-type: decimal">
-<li><p>Let’s make two different data frames, one focused on the “good
-guys” and another focused on the “bad guys”.</p></li>
+<li>Let’s make two different data frames, one focused on the “good guys”
+and another focused on the “bad guys”.</li>
+</ol>
+<pre class="r"><code>#good_guys&lt;- select(superhero_info, alignment==&quot;good&quot;)</code></pre>
+<ol start="6" style="list-style-type: decimal">
 <li><p>For the good guys, use the <code>tabyl</code> function to
 summarize their “race”.</p></li>
 <li><p>Among the good guys, Who are the Asgardians?</p></li>
