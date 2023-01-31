@@ -500,19 +500,22 @@ represented in the data?</p>
 ## 19 Trogoniformes         1</code></pre>
 <p>Problem 4. (2 points) Which habitat has the highest diversity (number
 of species) in the data?</p>
-<pre class="r"><code>ecosphere %&gt;% 
+<pre class="r"><code>#Woodland has the highest diversity with 177 species
+
+ecosphere %&gt;% 
   group_by(habitat) %&gt;% 
-  summarise(max_diversity=max(order)) %&gt;% 
-  count(max_diversity)</code></pre>
-<pre><code>## # A tibble: 6 × 2
-##   max_diversity         n
+  summarise(max_diversity=sum(n_distinct(scientific_name))) %&gt;% 
+  arrange(desc(max_diversity))</code></pre>
+<pre><code>## # A tibble: 7 × 2
+##   habitat   max_diversity
 ##   &lt;chr&gt;             &lt;int&gt;
-## 1 Passeriformes         1
-## 2 Podicipediformes      1
-## 3 Procellariiformes     1
-## 4 Psittaciformes        1
-## 5 Strigiformes          2
-## 6 Trogoniformes         1</code></pre>
+## 1 Woodland            177
+## 2 Wetland             153
+## 3 Shrubland            82
+## 4 Various              45
+## 5 Ocean                44
+## 6 Grassland            36
+## 7 &lt;NA&gt;                 14</code></pre>
 <p>Run the code below to learn about the <code>slice</code> function.
 Look specifically at the examples (at the bottom) for
 <code>slice_max()</code> and <code>slice_min()</code>. If you are still
@@ -540,44 +543,23 @@ largest and smallest winter range?</p>
 swans. Make a new object <code>ducks</code> that only includes species
 in the family Anatidae. Restrict this new dataframe to include all
 variables except order and family.</p>
-<pre class="r"><code>ducks&lt;- filter(ecosphere, family==&quot;Anatidae&quot;)
-ducks</code></pre>
-<pre><code>## # A tibble: 44 × 21
-##    order    family commo…¹ scien…² diet  life_…³ habitat urban…⁴ migra…⁵ log10…⁶
-##    &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
-##  1 Anserif… Anati… &quot;Ameri… Anas r… Vege… Long    Wetland No      Short      3.09
-##  2 Anserif… Anati… &quot;Ameri… Anas a… Vege… Middle  Wetland No      Short      2.88
-##  3 Anserif… Anati… &quot;Barro… Buceph… Inve… Middle  Wetland No      Modera…    2.96
-##  4 Anserif… Anati… &quot;Black… Branta… Vege… Long    Wetland No      Modera…    3.11
-##  5 Anserif… Anati… &quot;Black… Melani… Inve… Middle  Wetland No      Modera…    3.02
-##  6 Anserif… Anati… &quot;Black… Dendro… Vege… Short   Wetland No      Withdr…    2.88
-##  7 Anserif… Anati… &quot;Blue-… Anas d… Vege… Middle  Wetland No      Modera…    2.56
-##  8 Anserif… Anati… &quot;Buffl… Buceph… Inve… Middle  Wetland No      Short      2.6 
-##  9 Anserif… Anati… &quot;Cackl… Branta… Vege… Middle  Wetland Yes     Short      3.45
-## 10 Anserif… Anati… &quot;Canva… Aythya… Vege… Middle  Wetland No      Short      3.08
-## # … with 34 more rows, 11 more variables: mean_eggs_per_clutch &lt;dbl&gt;,
-## #   mean_age_at_sexual_maturity &lt;dbl&gt;, population_size &lt;dbl&gt;,
-## #   winter_range_area &lt;dbl&gt;, range_in_cbc &lt;dbl&gt;, strata &lt;dbl&gt;, circles &lt;dbl&gt;,
-## #   feeder_bird &lt;chr&gt;, median_trend &lt;dbl&gt;, lower_95_percent_ci &lt;dbl&gt;,
-## #   upper_95_percent_ci &lt;dbl&gt;, and abbreviated variable names ¹​common_name,
-## #   ²​scientific_name, ³​life_expectancy, ⁴​urban_affiliate, ⁵​migratory_strategy,
-## #   ⁶​log10_mass</code></pre>
+<pre class="r"><code>ducks&lt;- filter(ecosphere, family==&quot;Anatidae&quot;) %&gt;% 
+  select(-&quot;order&quot;,-&quot;family&quot;)</code></pre>
 <p>Problem 7. (2 points) We might assume that all ducks live in wetland
 habitat. Is this true for the ducks in these data? If there are
 exceptions, list the species below.</p>
 <pre class="r"><code>ducks %&gt;% 
   filter(habitat!=&quot;Wetland&quot;)</code></pre>
-<pre><code>## # A tibble: 1 × 21
-##   order     family commo…¹ scien…² diet  life_…³ habitat urban…⁴ migra…⁵ log10…⁶
-##   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
-## 1 Anserifo… Anati… Common… Somate… Inve… Middle  Ocean   No      Short      3.31
-## # … with 11 more variables: mean_eggs_per_clutch &lt;dbl&gt;,
-## #   mean_age_at_sexual_maturity &lt;dbl&gt;, population_size &lt;dbl&gt;,
-## #   winter_range_area &lt;dbl&gt;, range_in_cbc &lt;dbl&gt;, strata &lt;dbl&gt;, circles &lt;dbl&gt;,
-## #   feeder_bird &lt;chr&gt;, median_trend &lt;dbl&gt;, lower_95_percent_ci &lt;dbl&gt;,
-## #   upper_95_percent_ci &lt;dbl&gt;, and abbreviated variable names ¹​common_name,
-## #   ²​scientific_name, ³​life_expectancy, ⁴​urban_affiliate, ⁵​migratory_strategy,
-## #   ⁶​log10_mass</code></pre>
+<pre><code>## # A tibble: 1 × 19
+##   common…¹ scien…² diet  life_…³ habitat urban…⁴ migra…⁵ log10…⁶ mean_…⁷ mean_…⁸
+##   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Common … Somate… Inve… Middle  Ocean   No      Short      3.31       5     2.5
+## # … with 9 more variables: population_size &lt;dbl&gt;, winter_range_area &lt;dbl&gt;,
+## #   range_in_cbc &lt;dbl&gt;, strata &lt;dbl&gt;, circles &lt;dbl&gt;, feeder_bird &lt;chr&gt;,
+## #   median_trend &lt;dbl&gt;, lower_95_percent_ci &lt;dbl&gt;, upper_95_percent_ci &lt;dbl&gt;,
+## #   and abbreviated variable names ¹​common_name, ²​scientific_name,
+## #   ³​life_expectancy, ⁴​urban_affiliate, ⁵​migratory_strategy, ⁶​log10_mass,
+## #   ⁷​mean_eggs_per_clutch, ⁸​mean_age_at_sexual_maturity</code></pre>
 <p>Problem 8. (4 points) In ducks, how is mean body mass associated with
 migratory strategy? Do the ducks that migrate long distances have high
 or low average body mass?</p>
@@ -598,7 +580,31 @@ eagles, hawks, kites, and osprey. First, make a new object
 Accipitridae. Next, restrict these data to only include the variables
 common_name, scientific_name, and population_size.</p>
 <pre class="r"><code>eagles&lt;- filter(ecosphere, family==&quot;Accipitridae&quot;) %&gt;% 
-  select(common_name, scientific_name, population_size)</code></pre>
+  select(common_name, scientific_name, population_size)
+eagles</code></pre>
+<pre><code>## # A tibble: 20 × 3
+##    common_name         scientific_name          population_size
+##    &lt;chr&gt;               &lt;chr&gt;                              &lt;dbl&gt;
+##  1 Bald Eagle          Haliaeetus leucocephalus              NA
+##  2 Broad-winged Hawk   Buteo platypterus                1700000
+##  3 Cooper&#39;s Hawk       Accipiter cooperii                700000
+##  4 Ferruginous Hawk    Buteo regalis                      80000
+##  5 Golden Eagle        Aquila chrysaetos                 130000
+##  6 Gray Hawk           Buteo nitidus                         NA
+##  7 Harris&#39;s Hawk       Parabuteo unicinctus               50000
+##  8 Hook-billed Kite    Chondrohierax uncinatus               NA
+##  9 Northern Goshawk    Accipiter gentilis                200000
+## 10 Northern Harrier    Circus cyaneus                    700000
+## 11 Red-shouldered Hawk Buteo lineatus                   1100000
+## 12 Red-tailed Hawk     Buteo jamaicensis                2000000
+## 13 Rough-legged Hawk   Buteo lagopus                     300000
+## 14 Sharp-shinned Hawk  Accipiter striatus                500000
+## 15 Short-tailed Hawk   Buteo brachyurus                      NA
+## 16 Snail Kite          Rostrhamus sociabilis                 NA
+## 17 Swainson&#39;s Hawk     Buteo swainsoni                   540000
+## 18 White-tailed Hawk   Buteo albicaudatus                    NA
+## 19 White-tailed Kite   Elanus leucurus                       NA
+## 20 Zone-tailed Hawk    Buteo albonotatus                     NA</code></pre>
 <p>Problem 10. (4 points) In the eagles data, any species with a
 population size less than 250,000 individuals is threatened. Make a new
 column <code>conservation_status</code> that shows whether or not a
@@ -625,12 +631,66 @@ species is threatened.</p>
 <p>Problem 11. (2 points) Consider the results from questions 9 and 10.
 Are there any species for which their threatened status needs further
 study? How do you know?</p>
+<pre class="r"><code>#There is multiple catagories that include NAs, the species that would require more research would be the one below that appear as NA.
+eagles %&gt;% 
+  mutate(conservation_status=population_size&lt;250000) %&gt;% 
+  select(common_name, conservation_status)</code></pre>
+<pre><code>## # A tibble: 20 × 2
+##    common_name         conservation_status
+##    &lt;chr&gt;               &lt;lgl&gt;              
+##  1 Bald Eagle          NA                 
+##  2 Broad-winged Hawk   FALSE              
+##  3 Cooper&#39;s Hawk       FALSE              
+##  4 Ferruginous Hawk    TRUE               
+##  5 Golden Eagle        TRUE               
+##  6 Gray Hawk           NA                 
+##  7 Harris&#39;s Hawk       TRUE               
+##  8 Hook-billed Kite    NA                 
+##  9 Northern Goshawk    TRUE               
+## 10 Northern Harrier    FALSE              
+## 11 Red-shouldered Hawk FALSE              
+## 12 Red-tailed Hawk     FALSE              
+## 13 Rough-legged Hawk   FALSE              
+## 14 Sharp-shinned Hawk  FALSE              
+## 15 Short-tailed Hawk   NA                 
+## 16 Snail Kite          NA                 
+## 17 Swainson&#39;s Hawk     FALSE              
+## 18 White-tailed Hawk   NA                 
+## 19 White-tailed Kite   NA                 
+## 20 Zone-tailed Hawk    NA</code></pre>
 <p>Problem 12. (4 points) Use the <code>ecosphere</code> data to perform
 one exploratory analysis of your choice. The analysis must have a
 minimum of three lines and two functions. You must also clearly state
 the question you are attempting to answer.</p>
+<pre class="r"><code>#which birds lay at least 2 eggs per clutch above sexual maturity of 4
+ecosphere %&gt;% 
+  group_by(mean_age_at_sexual_maturity) %&gt;% 
+  filter(mean_age_at_sexual_maturity&gt;4) %&gt;% 
+  filter(mean_eggs_per_clutch&gt;=2) %&gt;% 
+  select(common_name,mean_age_at_sexual_maturity,mean_eggs_per_clutch) %&gt;% 
+  arrange(desc(mean_age_at_sexual_maturity))</code></pre>
+<pre><code>## # A tibble: 15 × 3
+## # Groups:   mean_age_at_sexual_maturity [5]
+##    common_name              mean_age_at_sexual_maturity mean_eggs_per_clutch
+##    &lt;chr&gt;                                          &lt;dbl&gt;                &lt;dbl&gt;
+##  1 Turkey Vulture                                  10.5                  2  
+##  2 Black Vulture                                    7.5                  2  
+##  3 Trumpeter Swan                                   5.5                  4.5
+##  4 Glaucous-winged Gull                             5.5                  3  
+##  5 Golden Eagle                                     5.5                  2.5
+##  6 Brown Jay                                        5                    4  
+##  7 Black Oystercatcher                              4.5                  2.5
+##  8 Great Black-backed Gull                          4.5                  2.5
+##  9 Lesser Black-backed Gull                         4.5                  3  
+## 10 Western Gull                                     4.5                  3  
+## 11 Yellow-footed Gull                               4.5                  3  
+## 12 Gull-billed Tern                                 4.5                  2  
+## 13 Bald Eagle                                       4.5                  2  
+## 14 Sandhill Crane                                   4.5                  2  
+## 15 Whooping Crane                                   4.5                  2</code></pre>
 <p>Please provide the names of the students you have worked with with
 during the exam:</p>
+<pre class="r"><code>#Ananda leia</code></pre>
 <p>Please be 100% sure your exam is saved, knitted, and pushed to your
 github repository. No need to submit a link on canvas, we will find your
 exam in your repository.</p>
