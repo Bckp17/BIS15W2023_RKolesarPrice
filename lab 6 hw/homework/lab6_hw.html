@@ -12045,12 +12045,71 @@ were caught as part of these data?</li>
 ## 10 Angelsharks, sand devils nei 10903XXXXX               4
 ## # … with 376,761 more rows</code></pre>
 <ol start="6" style="list-style-type: decimal">
-<li><p>Which country had the largest overall catch in the year
-2000?</p></li>
-<li><p>Which country caught the most sardines (<em>Sardina
-pilchardus</em>) between the years 1990-2000?</p></li>
-<li><p>Which five countries caught the most cephalopods between
-2008-2012?</p></li>
+<li>Which country had the largest overall catch in the year 2000?</li>
+</ol>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+  filter(year==2000) %&gt;% 
+  group_by(country) %&gt;% 
+  summarise(total_catch=sum(catch, na.rm=T)) %&gt;% 
+  arrange(desc(total_catch))</code></pre>
+<pre><code>## # A tibble: 193 × 2
+##    country                  total_catch
+##    &lt;fct&gt;                          &lt;dbl&gt;
+##  1 China                          25899
+##  2 Russian Federation             12181
+##  3 United States of America       11762
+##  4 Japan                           8510
+##  5 Indonesia                       8341
+##  6 Peru                            7443
+##  7 Chile                           6906
+##  8 India                           6351
+##  9 Thailand                        6243
+## 10 Korea, Republic of              6124
+## # … with 183 more rows</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Which country caught the most sardines (<em>Sardina pilchardus</em>)
+between the years 1990-2000?</li>
+</ol>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+  filter(between(year,1990,2000)) %&gt;% 
+  group_by(country) %&gt;% 
+  select(common_name, asfis_species_name,year,country) %&gt;% 
+  filter(asfis_species_name==&quot;Sardina pilchardus&quot;)</code></pre>
+<pre><code>## # A tibble: 336 × 4
+## # Groups:   country [37]
+##    common_name                 asfis_species_name  year country
+##    &lt;chr&gt;                       &lt;chr&gt;              &lt;dbl&gt; &lt;fct&gt;  
+##  1 European pilchard(=Sardine) Sardina pilchardus  1990 Albania
+##  2 European pilchard(=Sardine) Sardina pilchardus  1991 Albania
+##  3 European pilchard(=Sardine) Sardina pilchardus  1992 Albania
+##  4 European pilchard(=Sardine) Sardina pilchardus  1993 Albania
+##  5 European pilchard(=Sardine) Sardina pilchardus  1994 Albania
+##  6 European pilchard(=Sardine) Sardina pilchardus  1995 Albania
+##  7 European pilchard(=Sardine) Sardina pilchardus  1996 Albania
+##  8 European pilchard(=Sardine) Sardina pilchardus  1997 Albania
+##  9 European pilchard(=Sardine) Sardina pilchardus  1998 Albania
+## 10 European pilchard(=Sardine) Sardina pilchardus  1999 Albania
+## # … with 326 more rows</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Which five countries caught the most cephalopods between
+2008-2012?</li>
+</ol>
+<pre class="r"><code>fisheries_tidy %&gt;% 
+   group_by(country) %&gt;%
+  filter(between(year,2008,2012))%&gt;% 
+  #filter(isscaap_taxonomic_group==&quot;Squids,cuttlefishes,octopuses&quot;)%&gt;% 
+  summarize(cephalopods_catch=sum(catch, na.rm = T)) %&gt;% 
+  arrange(desc(cephalopods_catch)) %&gt;% 
+  head(n=5)</code></pre>
+<pre><code>## # A tibble: 5 × 2
+##   country                  cephalopods_catch
+##   &lt;fct&gt;                                &lt;dbl&gt;
+## 1 China                               117007
+## 2 United States of America             70778
+## 3 Russian Federation                   59153
+## 4 Indonesia                            50618
+## 5 Japan                                48370</code></pre>
+<ol start="9" style="list-style-type: decimal">
 <li><p>Which species had the highest catch total between 2008-2012?
 (hint: Osteichthyes is not a species)</p></li>
 <li><p>Use the data to do at least one analysis of your choice.</p></li>

@@ -11701,12 +11701,81 @@ fisheries_tidy %>%
 
 6. Which country had the largest overall catch in the year 2000?
 
+```r
+fisheries_tidy %>% 
+  filter(year==2000) %>% 
+  group_by(country) %>% 
+  summarise(total_catch=sum(catch, na.rm=T)) %>% 
+  arrange(desc(total_catch))
+```
+
+```
+## # A tibble: 193 × 2
+##    country                  total_catch
+##    <fct>                          <dbl>
+##  1 China                          25899
+##  2 Russian Federation             12181
+##  3 United States of America       11762
+##  4 Japan                           8510
+##  5 Indonesia                       8341
+##  6 Peru                            7443
+##  7 Chile                           6906
+##  8 India                           6351
+##  9 Thailand                        6243
+## 10 Korea, Republic of              6124
+## # … with 183 more rows
+```
 
 7. Which country caught the most sardines (_Sardina pilchardus_) between the years 1990-2000?
 
+```r
+fisheries_tidy %>% 
+  filter(between(year,1990,2000)) %>% 
+  group_by(country) %>% 
+  select(common_name, asfis_species_name,year,country) %>% 
+  filter(asfis_species_name=="Sardina pilchardus")
+```
+
+```
+## # A tibble: 336 × 4
+## # Groups:   country [37]
+##    common_name                 asfis_species_name  year country
+##    <chr>                       <chr>              <dbl> <fct>  
+##  1 European pilchard(=Sardine) Sardina pilchardus  1990 Albania
+##  2 European pilchard(=Sardine) Sardina pilchardus  1991 Albania
+##  3 European pilchard(=Sardine) Sardina pilchardus  1992 Albania
+##  4 European pilchard(=Sardine) Sardina pilchardus  1993 Albania
+##  5 European pilchard(=Sardine) Sardina pilchardus  1994 Albania
+##  6 European pilchard(=Sardine) Sardina pilchardus  1995 Albania
+##  7 European pilchard(=Sardine) Sardina pilchardus  1996 Albania
+##  8 European pilchard(=Sardine) Sardina pilchardus  1997 Albania
+##  9 European pilchard(=Sardine) Sardina pilchardus  1998 Albania
+## 10 European pilchard(=Sardine) Sardina pilchardus  1999 Albania
+## # … with 326 more rows
+```
 
 8. Which five countries caught the most cephalopods between 2008-2012?
 
+```r
+fisheries_tidy %>% 
+   group_by(country) %>%
+  filter(between(year,2008,2012))%>% 
+  #filter(isscaap_taxonomic_group=="Squids,cuttlefishes,octopuses")%>% 
+  summarize(cephalopods_catch=sum(catch, na.rm = T)) %>% 
+  arrange(desc(cephalopods_catch)) %>% 
+  head(n=5)
+```
+
+```
+## # A tibble: 5 × 2
+##   country                  cephalopods_catch
+##   <fct>                                <dbl>
+## 1 China                               117007
+## 2 United States of America             70778
+## 3 Russian Federation                   59153
+## 4 Indonesia                            50618
+## 5 Japan                                48370
+```
 
 
 
