@@ -11758,31 +11758,65 @@ fisheries_tidy %>%
 
 ```r
 fisheries_tidy %>% 
-   group_by(country) %>%
-  filter(between(year,2008,2012))%>% 
-  #filter(isscaap_taxonomic_group=="Squids,cuttlefishes,octopuses")%>% 
-  summarize(cephalopods_catch=sum(catch, na.rm = T)) %>% 
+  group_by(country) %>% 
+  filter(isscaap_taxonomic_group=="Squids,cuttlefish,octopuses") %>% 
+  filter(between(year,2008,2012)) %>% 
+  summarise(cephalopods_catch=sum(catch, na.rm=T)) %>% 
   arrange(desc(cephalopods_catch)) %>% 
   head(n=5)
 ```
 
 ```
-## # A tibble: 5 × 2
-##   country                  cephalopods_catch
-##   <fct>                                <dbl>
-## 1 China                               117007
-## 2 United States of America             70778
-## 3 Russian Federation                   59153
-## 4 Indonesia                            50618
-## 5 Japan                                48370
+## # A tibble: 0 × 2
+## # … with 2 variables: country <fct>, cephalopods_catch <dbl>
 ```
 
 
 
 9. Which species had the highest catch total between 2008-2012? (hint: Osteichthyes is not a species)
 
+```r
+fisheries_tidy%>%
+  filter(between(year,2008,2012)) %>%
+  group_by(asfis_species_name) %>% 
+  filter(asfis_species_name!= "Osteichthyes") %>% 
+  summarize(highest_catch=sum(catch, na.rm=T)) %>% 
+  arrange(desc(highest_catch))
+```
+
+```
+## # A tibble: 1,471 × 2
+##    asfis_species_name    highest_catch
+##    <chr>                         <dbl>
+##  1 Theragra chalcogramma         41075
+##  2 Engraulis ringens             35523
+##  3 Katsuwonus pelamis            32153
+##  4 Trichiurus lepturus           30400
+##  5 Clupea harengus               28527
+##  6 Thunnus albacares             20119
+##  7 Scomber japonicus             14723
+##  8 Gadus morhua                  13253
+##  9 Thunnus alalunga              12019
+## 10 Natantia                      11984
+## # … with 1,461 more rows
+```
 
 10. Use the data to do at least one analysis of your choice.
+
+```r
+fisheries_tidy %>% 
+  filter(common_name=="Marine crabs nei") %>% 
+  filter(between(year, 2000,2012)) %>% 
+  select(common_name,year,catch) %>% 
+  summarise(crabs=sum(catch, na.rm = T))
+```
+
+```
+## # A tibble: 1 × 1
+##   crabs
+##   <dbl>
+## 1 17218
+```
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   

@@ -106,10 +106,10 @@ fisheries_tidy %>%
 8. Which five countries caught the most cephalopods between 2008-2012?
 ```{r}
 fisheries_tidy %>% 
-   group_by(country) %>%
-  filter(between(year,2008,2012))%>% 
-  #filter(isscaap_taxonomic_group=="Squids,cuttlefishes,octopuses")%>% 
-  summarize(cephalopods_catch=sum(catch, na.rm = T)) %>% 
+  group_by(country) %>% 
+  filter(isscaap_taxonomic_group=="Squids,cuttlefish,octopuses") %>% 
+  filter(between(year,2008,2012)) %>% 
+  summarise(cephalopods_catch=sum(catch, na.rm=T)) %>% 
   arrange(desc(cephalopods_catch)) %>% 
   head(n=5)
     
@@ -121,10 +121,22 @@ fisheries_tidy %>%
 
 9. Which species had the highest catch total between 2008-2012? (hint: Osteichthyes is not a species)
 ```{r}
-
+fisheries_tidy%>%
+  filter(between(year,2008,2012)) %>%
+  group_by(asfis_species_name) %>% 
+  filter(asfis_species_name!= "Osteichthyes") %>% 
+  summarize(highest_catch=sum(catch, na.rm=T)) %>% 
+  arrange(desc(highest_catch))
 ```
 
 10. Use the data to do at least one analysis of your choice.
+```{r}
+fisheries_tidy %>% 
+  filter(common_name=="Marine crabs nei") %>% 
+  filter(between(year, 2000,2012)) %>% 
+  select(common_name,year,catch) %>% 
+  summarise(crabs=sum(catch, na.rm = T))
+```
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   
