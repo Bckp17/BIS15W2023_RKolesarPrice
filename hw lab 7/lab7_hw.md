@@ -1,7 +1,7 @@
 ---
 title: "Lab 7 Homework"
-author: "Joel Ledford"
-date: "2022-01-23"
+author: "Rebecca Kolesar-Price"
+date: "2/2/23"
 output:
   html_document: 
     theme: spacelab
@@ -31,12 +31,41 @@ Myhrvold N, Baldridge E, Chan B, Sivam D, Freeman DL, Ernest SKM (2015). “An a
 database to perform comparative analyses with birds, mammals, and reptiles.” _Ecology_, *96*, 3109.
 doi: 10.1890/15-0846.1 (URL: https://doi.org/10.1890/15-0846.1).
 
+```r
+amniota <- readr::read_csv("data/amniota.csv")
+```
+
+```
+## Rows: 21322 Columns: 36
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: ","
+## chr  (6): class, order, family, genus, species, common_name
+## dbl (30): subspecies, female_maturity_d, litter_or_clutch_size_n, litters_or...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+```
 
 `amphibio` data:  
 Oliveira BF, São-Pedro VA, Santos-Barrera G, Penone C, Costa GC (2017). “AmphiBIO, a global database
 for amphibian ecological traits.” _Scientific Data_, *4*, 170123. doi: 10.1038/sdata.2017.123 (URL:
 https://doi.org/10.1038/sdata.2017.123).
 
+```r
+amphibio <- readr::read_csv("data/amphibio.csv")
+```
+
+```
+## Rows: 6776 Columns: 38
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: ","
+## chr  (6): id, Order, Family, Genus, Species, OBS
+## dbl (31): Fos, Ter, Aqu, Arb, Leaves, Flowers, Seeds, Arthro, Vert, Diu, Noc...
+## lgl  (1): Fruits
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+```
 
 ## Questions  
 **2. Do some exploratory analysis of the `amniota` data set. Use the function(s) of your choice. Try to get an idea of how NA's are represented in the data.**  

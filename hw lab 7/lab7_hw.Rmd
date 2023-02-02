@@ -1,7 +1,7 @@
 ---
 title: "Lab 7 Homework"
-author: "Joel Ledford"
-date: "`r Sys.Date()`"
+author: "Rebecca Kolesar-Price"
+date: "2/2/23"
 output:
   html_document: 
     theme: spacelab
@@ -32,7 +32,7 @@ Myhrvold N, Baldridge E, Chan B, Sivam D, Freeman DL, Ernest SKM (2015). “An a
 database to perform comparative analyses with birds, mammals, and reptiles.” _Ecology_, *96*, 3109.
 doi: 10.1890/15-0846.1 (URL: https://doi.org/10.1890/15-0846.1).
 ```{r}
-
+amniota <- readr::read_csv("data/amniota.csv")
 ```
 
 `amphibio` data:  
@@ -40,7 +40,7 @@ Oliveira BF, São-Pedro VA, Santos-Barrera G, Penone C, Costa GC (2017). “Amph
 for amphibian ecological traits.” _Scientific Data_, *4*, 170123. doi: 10.1038/sdata.2017.123 (URL:
 https://doi.org/10.1038/sdata.2017.123).
 ```{r}
-
+amphibio <- readr::read_csv("data/amphibio.csv")
 ```
 
 ## Questions  
