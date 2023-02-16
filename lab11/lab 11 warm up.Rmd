@@ -1,0 +1,48 @@
+---
+title: "warm up"
+output: html_document
+date: "2023-02-16"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library("tidyverse")
+```
+```{r}
+heartrate<-read_csv("data/heartrate.csv")
+```
+```{r}
+heartrate %>% 
+  ggplot(aes(x=patient,y=a, fill=patient))+
+  geom_col()+
+  labs(title="Comparison of drug A",
+       x="Patient",
+       y="Heartrate")
+```
+
+
+```{r}
+heartrate %>% 
+  pivot_longer(-patient,
+                names_to="drug",
+                values_to="heartrate") %>% 
+  ggplot(aes(x=drug,y=heartrate, fill=drug))+
+  geom_boxplot(alpha=0.7)+
+  labs(title="Comparison of drug A",
+       x="Patient",
+       y="Heartrate")
+```
+
+
+
+
+
+
+
+
+
+
+
