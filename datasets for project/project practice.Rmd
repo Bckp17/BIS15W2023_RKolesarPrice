@@ -14,8 +14,36 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
+```{r}
+library(tidyverse)
+library(here)
+```
+
+
+
 ```{r cars}
-summary(cars)7
+data_1<- read_csv("global-plastics-production.csv")
+```
+```{r}
+data_2<- read_csv("mismanaged-waste-global-total.csv")
+```
+```{r}
+data_3<-read_csv("MLW_Data.csv")
+```
+```{r}
+data_4<-read.csv("MLW_Meta.csv")
+```
+```{r}
+data_5<-read.csv("per-capita-mismanaged-plastic-waste-vs-gdp-per-capita.csv")
+```
+```{r}
+data_6<-read.csv("per-capita-plastic-waste-vs-gdp-per-capita.csv")
+```
+```{r}
+data_7<-read.csv("plastic_pollution.csv")
+```
+```{r}
+data_8<-read.csv("plastic-waste-per-capita.csv")
 ```
 
 ## Including Plots
