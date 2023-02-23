@@ -200,66 +200,87 @@ The variable `ccsmort30rate` is a measure of the overall 30-day mortality rate a
 7. (4 points) What are the 5 procedures associated with highest risk of 30-day mortality AND how do they compare with the 5 procedures with highest risk of complication? (hint: no need for a plot here)
 
 ```r
-surgery
+surgery %>% 
+  group_by(ahrq_ccs) %>% 
+summarize(mean_ccscomplicationrate=mean(ccscomplicationrate)) %>% 
+  arrange(desc(mean_ccscomplicationrate)) %>% 
+  slice(1:5)
 ```
 
 ```
-## # A tibble: 32,001 × 25
-##    ahrq_ccs   age gender race      asa_s…¹   bmi basel…² basel…³ basel…⁴ basel…⁵
-##    <chr>    <dbl> <chr>  <chr>     <chr>   <dbl> <chr>   <chr>   <chr>   <chr>  
-##  1 <Other>   67.8 M      Caucasian I-II     28.0 No      Yes     No      No     
-##  2 <Other>   39.5 F      Caucasian I-II     37.8 No      Yes     No      No     
-##  3 <Other>   56.5 F      Caucasian I-II     19.6 No      No      No      No     
-##  4 <Other>   71   M      Caucasian III      32.2 No      Yes     No      No     
-##  5 <Other>   56.3 M      African … I-II     24.3 Yes     No      No      No     
-##  6 <Other>   57.7 F      Caucasian I-II     40.3 No      Yes     No      No     
-##  7 <Other>   56.6 M      Other     IV-VI    64.6 No      Yes     No      Yes    
-##  8 <Other>   64.2 F      Caucasian III      43.2 No      Yes     No      No     
-##  9 <Other>   66.2 M      Caucasian III      28.0 No      Yes     No      No     
-## 10 <Other>   20.1 F      Caucasian I-II     27.4 Yes     No      No      No     
-## # … with 31,991 more rows, 15 more variables: baseline_digestive <chr>,
-## #   baseline_osteoart <chr>, baseline_psych <chr>, baseline_pulmonary <chr>,
-## #   baseline_charlson <dbl>, mortality_rsi <dbl>, complication_rsi <dbl>,
-## #   ccsmort30rate <dbl>, ccscomplicationrate <dbl>, hour <dbl>, dow <chr>,
-## #   month <chr>, moonphase <chr>, mort30 <chr>, complication <chr>, and
-## #   abbreviated variable names ¹​asa_status, ²​baseline_cancer, ³​baseline_cvd,
-## #   ⁴​baseline_dementia, ⁵​baseline_diabetes
+## # A tibble: 5 × 2
+##   ahrq_ccs                         mean_ccscomplicationrate
+##   <chr>                                               <dbl>
+## 1 Small bowel resection                               0.466
+## 2 Colorectal resection                                0.312
+## 3 Nephrectomy; partial or complete                    0.197
+## 4 Gastrectomy; partial and total                      0.190
+## 5 Spinal fusion                                       0.183
 ```
 
 8. (3 points) Make a plot that compares the `ccsmort30rate` for all listed `ahrq_ccs` procedures.
 
+```r
+surgery %>% 
+  ggplot(aes(x = ahrq_ccs, y=ccscomplicationrate)) +
+ geom_point()+scale_fill_brewer(palette = "BuPu")+
+  coord_flip()+
+  theme(axis.text.x = element_text(angle = 0, hjust = 1))+
+  labs(title = "Complications",
+       x ="Operations",
+       y = "Complication Rates")
+```
+
+![](midterm_2_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 9. (4 points) When is the best month to have surgery? Make a chart that shows the 30-day mortality and complications for the patients by month. `mort30` is the variable that shows whether or not a patient survived 30 days post-operation.
 
 ```r
 surgery %>% 
   group_by(month) %>% 
-  select(month,mort30) %>% 
-  pivot_wider(names_from = "month",
-              values_from="mort30")
+  count(mort30, sort=T) %>% 
+  arrange(desc(month))
 ```
 
 ```
-## Warning: Values from `mort30` are not uniquely identified; output will contain list-cols.
-## * Use `values_fn = list` to suppress this warning.
-## * Use `values_fn = {summary_fun}` to summarise duplicates.
-## * Use the following dplyr code to identify duplicates.
-##   {data} %>%
-##     dplyr::group_by(month) %>%
-##     dplyr::summarise(n = dplyr::n(), .groups = "drop") %>%
-##     dplyr::filter(n > 1L)
-```
-
-```
-## # A tibble: 1 × 12
-##   Nov    Sep    Aug    Jun    Dec    Apr    Oct    Jan   May   Mar   Feb   Jul  
-##   <list> <list> <list> <list> <list> <list> <list> <lis> <lis> <lis> <lis> <lis>
-## 1 <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr> <chr> <chr> <chr> <chr>
+## # A tibble: 24 × 3
+## # Groups:   month [12]
+##    month mort30     n
+##    <chr> <chr>  <int>
+##  1 Sep   No      3192
+##  2 Sep   Yes       16
+##  3 Oct   No      2681
+##  4 Oct   Yes        8
+##  5 Nov   No      2539
+##  6 Nov   Yes        5
+##  7 May   No      2644
+##  8 May   Yes       10
+##  9 Mar   No      2685
+## 10 Mar   Yes       12
+## # … with 14 more rows
 ```
 
 10. (4 points) Make a plot that visualizes the chart from question #9. Make sure that the months are on the x-axis. Do a search online and figure out how to order the months Jan-Dec.
 
+```r
+surgery %>% 
+  group_by(month) %>% 
+  count(mort30, sort=T) %>% 
+  ggplot(aes(x=n,y=month))+
+  geom_boxplot()+
+  scale_fill_brewer(palette = "BuPu")+
+  theme(axis.text.x = element_text(angle = 0, hjust = 1))+
+  labs(title = "Mortality Rate",
+       x ="Mortality Rate",
+       y = "Month")
+```
+
+![](midterm_2_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 
 Please provide the names of the students you have worked with with during the exam:
+
+```r
+#Laurine
+```
 
 Please be 100% sure your exam is saved, knitted, and pushed to your github repository. No need to submit a link on canvas, we will find your exam in your repository.
