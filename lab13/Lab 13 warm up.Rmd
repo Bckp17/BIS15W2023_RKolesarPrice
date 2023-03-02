@@ -1,0 +1,55 @@
+---
+title: "Lab 13 intro warm up"
+output: html_document
+date: "2023-03-02"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library("tidyverse")
+library(janitor)
+library(shiny)
+library(shinydashboard)
+```
+
+```{r}
+elephants <- read.csv("data/ElephantsMF.csv") %>% clean_names()
+```
+```{r}
+glimpse(elephants)
+```
+```{r}
+elephants %>% 
+  ggplot(aes(x=age,y=height))
+```
+
+```{r}
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Elephant Age vs. Height"),
+  selectInput("sex", "Select Sex", choices = c("M","F"), selected = "M"),
+  helpText("help"),
+  plotOutput("plot", width = "500px", height = "400px")
+)
+
+server <- function(input, output, session) {
+  output$plot<-renderPlot({
+    filter(elephants, sex==input$sex) %>% 
+      ggplot(aes(x=age,y=height))+
+      geom_point()
+  })
+}
+
+shinyApp(ui, server)
+```
+
+
+
+
+
+
