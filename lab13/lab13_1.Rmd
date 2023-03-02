@@ -59,7 +59,10 @@ spider_list[[3]]
 ## Practice
 1. Getting an idea of the structure of lists is a bit tricky, especially when there are many elements. Try exploring the elements in `spider_list` using names(), str(), or glimpse(). For names(), you will need to specify an element using [[]].  
 ```{r}
-
+names(spider_list[[1]])
+```
+```{r}
+glimpse(spider_list[[23]])
 ```
 
 ## Merging Files
@@ -68,6 +71,27 @@ We are fortunate here in that all of our data frames have the same column names.
 spiders_all <- bind_rows(spider_list)
 spiders_all
 ```
+
+## Naming list elements 
+```{r}
+names<-list.files(path="data/spiders", pattern=" .csv")
+```
+```{r}
+names_list<-strsplit(names, split = " .csv")
+```
+```{r}
+names_vec<-unlist(names_list)
+```
+```{r}
+names(spider_list)<-names_vec
+names(spider_list)
+```
+
+```{r}
+spider_list$Butte
+```
+
+
 
 ## Joining Files
 Sometimes data we need is stored in a separate file or becomes available later and we need to join it to our existing data in order to work with it. Let's use an easy example to explore some of the different types of joins. This section was based on the excellent example provided by [Holly Emblem](https://hollyemblem.medium.com/joining-data-with-dplyr-in-r-874698eb8898).  
