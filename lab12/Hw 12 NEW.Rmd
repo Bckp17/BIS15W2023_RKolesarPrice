@@ -1,0 +1,77 @@
+---
+title: "hw 12"
+output: 
+  html_document: 
+    keep_md: yes
+date: "2023-03-02"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+library(shiny)
+library(shinydashboard)
+require(janitor)
+```
+
+
+1. Start by loading and exploring the data.
+```{r}
+wolves <- read_csv("data/wolves_data/wolves_dataset.csv")
+```
+
+```{r}
+names(wolves)
+```
+
+2. For the app, here is a faceted version of what we are looking for. We want the reactive part to be `pop` and you should use `shinydashboard`.
+```{r}
+wolves %>% 
+  filter(sex!="NA") %>% 
+  ggplot(aes(x=sex, fill=sex))+
+  geom_bar()+
+  facet_wrap(~pop)
+```
+
+```{r}
+ui <- 
+  dashboardBody(
+    fluidRow(
+      box(title = "Plot Graphs",
+        selectInput("x", "Select Wolf Population", choices = unique(wolves$pop))
+      ),
+        plotOutput("plot", width = "500px", height = "400px")
+      ))
+server <- function(input, output, session) { 
+  output$plot <- renderPlot({
+  ggplot(filter(wolves,pop==input$x & sex!="NA"), aes(x=sex, fill=sex)) +
+      geom_bar() 
+  })
+  
+  }
+shinyApp(ui, server)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
